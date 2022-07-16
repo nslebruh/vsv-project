@@ -10,10 +10,10 @@ import {
 import {
   DBProvider,
 } from "./firebase/context/database"
-import { Channel } from "./channel";
+import { Channel } from "./pages/channel";
 import { AppNavbar } from "./navbar";
 import "./index.scss";
-import { LandingPage } from "./LandingPage";
+import { LandingPage } from "./pages/LandingPage";
 
 const App = () => {
   return (
