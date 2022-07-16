@@ -1,0 +1,19 @@
+html, body, #root{
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+}
+.app {
+  background-color: #212529;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.content {
+  flex: 1;
+}
+div{
+  padding: 0px
+}
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
