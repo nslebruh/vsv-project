@@ -1,39 +1,51 @@
 .messageForm {
-    height: 100%;
-    flex: 1
-
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    padding-left: 2vw;
+    padding-right: 2vw;
 }
-
+.channelInfo {
+    display: flex;
+    flex: none;
+    padding-top: 8vh;
+}
 .messagePage {
+    display: flex;
+    flex-direction: column;
     flex: 1;
     
 }
 .messages {
-    max-height: 68vh;
+    height: auto;
+    max-height: 75vh;
     overflow: scroll;
     overflow-x: hidden;
+    padding-left: 1vh;
+    padding-right: 1vh;
+    padding-bottom: 2.5vh;
+    padding-top: 2.5vh;
 }
 .message {
-    border: 1px solid black;
+    border: 0.25vh solid black;
     background-color: #1e1e1e;
     border-radius: 5px;
     .timestamp {
         color: #999;
         font-size: 0.8em;
-        margin-right: 10px;
+        margin-right: 1rem;
         text-align: end;
     }
     .user {
         color: #999;
         font-size: 1em;
-        margin-left: 10px;
+        margin-left: 1rem;
         text-align: start;
     }
     .text {
         color: #fff;
         font-size: 1em;
-        margin-left: 15px;
-        margin-right: 15px;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
         text-align: start;
         word-wrap: break-word;
     }

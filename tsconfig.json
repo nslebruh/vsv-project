@@ -23,7 +23,7 @@
     "noUnusedLocals": true, /* reports errors on unused locals (suggested for clean code writing) */
     "noUnusedParameters": true, /* report errors on unused parameters (again, suggested for clean code writing) */
   },
-  "project": "/vsv-project.github.io/tsconfig.json",
+  "project": "/tsconfig.json",
   "include": [
     "src/**/*" // *** The files TypeScript should type check ***
   ],

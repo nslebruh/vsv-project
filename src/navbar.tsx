@@ -4,7 +4,10 @@ import {
   Offcanvas, 
   Nav, 
   Form, 
-  Button
+  Button,
+  Modal,
+  Row,
+  Col
 } from "react-bootstrap";
 import {
   LinkContainer
@@ -75,15 +78,40 @@ const LoginOffcanvas = (props: any) => {
 const ChannelsOffcanvas = (props: any) => {
   const navigate = useNavigate()
   const user = useAuthProvider() || {displayName: "", email: ""};
+  const [modalStatus, setModalStatus] = useState<boolean>(false)
+  const [newChannelName, setNewChannelName] = useState<string>("")
+  const [newChannelMembers, setNewChannelMembers] = useState<Array<any>>([user.uid])
+  const [newChannelMember, setNewChannelMember] = useState<string>("")
+  //const [channelNameIsAvaliable, setchannelNameIsAvaliable] = useState<boolean>(false)
   const status = props.status
   const setStatus = props.setStatus
   const channels = props.channels
   const error = props.error
+
+  useEffect(() => {
+    if (newChannelName.trim() !== "") {
+      console.log("channel name")
+    }
+  }, [newChannelName])
+  const handleNewChannelNameChange = (e: any) => {
+    setNewChannelName(e.target.value)
+  }
+
+  const handleNewChannelSubmit = (e: any) => {
+    console.log(e)
+    e.preventDefault()
+
+  }
+
+  const handleNewChannelMember = (e: any) => {
+    console.log(e)
+    setNewChannelMember(e.target.value)
+  }
   return (
     <>
       <Offcanvas show={status} onHide={() => setStatus(false)}>
         <Offcanvas.Header closeButton>
-          <Offcanvas.Title>{user.displayName || user.email}Channels</Offcanvas.Title>
+          <Offcanvas.Title>{user.displayName || user.email}'s Channels</Offcanvas.Title>
         </Offcanvas.Header>
         <Offcanvas.Body>
           {error 
@@ -108,8 +136,63 @@ const ChannelsOffcanvas = (props: any) => {
               
             </>
           }
+          <Button onClick={() => setModalStatus(true)}>
+            test modal
+          </Button>
         </Offcanvas.Body>
       </Offcanvas>
+      <Modal show={modalStatus} onHide={() => setModalStatus(false)} size={"xl"}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Create new channel
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleNewChannelSubmit}>
+            <Form.Group as={Row} className="mb-3">
+              <Col>
+                <Form.Floating id="ChannelName">
+                  <Form.Control
+                    type="text"
+                    placeholder="Channel Name"
+                    value={newChannelName}
+                    onChange={handleNewChannelNameChange}
+                    
+                  />
+                  <label htmlFor="ChannelName">Channel Name</label>
+                </Form.Floating>
+              </Col>
+              <Col xs="2">
+                This name is avaliable 
+              </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3">
+              <Form.Label column xs="2">
+                Add members: 
+              </Form.Label>
+              <Col>
+                <Form.Control
+                  type="text"
+                  value={newChannelMember}
+                  onChange={handleNewChannelMember}
+                />
+                <Button onClick={() => setNewChannelMembers([ ...newChannelMembers, newChannelMember,])}>Add</Button>
+              </Col>
+              <Col xs="4">
+                {newChannelMembers ? newChannelMembers.map((c, i) => (
+                  <div key={i}>
+                    {c}
+                  </div>
+                )) : null}
+              </Col>
+              
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={(e) => handleNewChannelSubmit(e)}>Submit</Button><Button onClick={() => setModalStatus(false)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
     </> 
   )
 }
@@ -152,7 +235,7 @@ export const AppNavbar = () => {
   }, [user])
   return (
     <>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="dark" variant="dark" expand="lg" className="testing438 position-absolute w-100">
         <Navbar.Brand>
           <LinkContainer to="/">
             <div>VSV Chat App</div>
