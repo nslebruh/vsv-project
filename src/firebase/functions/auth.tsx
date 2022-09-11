@@ -24,6 +24,14 @@ export const signUpUser = (email: string, password: string) => {
         .catch((err) => {
           console.log(err)
         })
+      const reference2 = getRef("/channels/root/members")
+      set(reference2, {[user.uid]: true})
+        .then((value) => {
+          console.log(value)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -36,7 +44,7 @@ export const signInUser = (email: string, password: string) => {
     .then((userCredential) => {
       // Sign in sucessful.
       const user = userCredential.user
-      const checkForRootChannel = () => {
+      const checkForUserRootChannel = () => {
         const reference = getRef(`/users/${user.uid}/channels`)
         get(reference)
           .then((value: DataSnapshot) => {
@@ -51,8 +59,28 @@ export const signInUser = (email: string, password: string) => {
             }
           })
       }
+      const checkForChannelRootChannel = () => {
+        const reference = getRef("/channels/root/members")
+        get(reference)
+          .then((value) => {
+            if (!value.hasChild(user.uid)) {
+              set(reference, {[user.uid]: true})
+                .then((val) => {
+                  console.log(val)
+                })
+                .catch((err) => {
+                  console.log(err)
+                })
+            }
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      }
+
       console.log("user:", user);
-      checkForRootChannel()
+      checkForUserRootChannel()
+      checkForChannelRootChannel()
     })
     .catch((error) => {
       const errorCode = error.code;
